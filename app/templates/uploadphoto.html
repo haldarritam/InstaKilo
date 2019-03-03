@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="header">
+    <li style="float:right;"><a href="{{url_for('sign_out')}}">Sign out</a></li>
+    <li style="float:right;"><a href="{{url_for('index')}}">Back to gallery</a></li>
+</ul>
+<legend class="text-center case" style="margin-top:40px;"><h1>Tell us more about your photo</h1></legend>
+<br/>
+<form method="post" enctype="multipart/form-data" action={{url_for('photo_upload')}} class="container">
+    <div class="text-center forms container">
+        <input type="text" name="title" value="{{title if title!=None}}"
+               required pattern = "^[a-zA-Z ][a-zA-Z0-9-. ]{3,45}$"
+               title = "From 3 to 45 characters (spaces included), numbers and -."
+               placeholder="Title" class="textbox"><br/>
+        <input type="text" name="hashtag" value="{{hashtags if hashtags!=None}}"
+               required pattern = "(?<=\s|^)#(\w*[A-Za-z_]+\w*)"
+               title="Sequence of characters (numbers and _ included), starting with #)"
+               placeholder="#Hashtag" class="textbox"><br/>
+        <input type="file" name="uploadedfile" value="Choose Image" accept=".png, .jpg, .jpeg, .gif, .bmp, .tiff"class="button"/>
+        {% if up_error!=None %}
+            <span style="color:red;">{{ up_error }}</span>
+        {% endif %}
+        <input type="submit" name="upload"  value="Upload" class="button">
+    </div>
+</form>
+{% endblock %}
